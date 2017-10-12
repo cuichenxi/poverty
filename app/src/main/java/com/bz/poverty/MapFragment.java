@@ -41,8 +41,8 @@ public class MapFragment extends BaseFragment  implements BaiduMap.OnMarkerClick
     private BaiduMap mBaiduMap;
     private MapStatus mMapStatus;
     LatLng centerPoint = new LatLng(33.747383, 115.785038);
-    int pZoom = 12;
-    int cZoom = 15;
+    int pZoom = 11;
+    int cZoom = 13;
     boolean isChild;
     private List<PointItem> pointItems;
     public String name = "谯城区";
@@ -114,8 +114,8 @@ public class MapFragment extends BaseFragment  implements BaiduMap.OnMarkerClick
         layout.addView(textView);
         textView.setText(item.baseinfo);
         textView.setTextColor(getResources().getColor(R.color.pub_color_black));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
-        InfoWindow mInfoWindow = new InfoWindow(layout, marker.getPosition(), BitmapHelper.dip2px(getContext(),-100));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        InfoWindow mInfoWindow = new InfoWindow(layout, marker.getPosition(), BitmapHelper.dip2px(getContext(),-45));
         mBaiduMap.showInfoWindow(mInfoWindow);
         return false;
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="100dp"
+    android:layout_height="50dp"
     android:background="@color/pub_color_white"
     android:gravity="center_vertical">
 
@@ -13,7 +13,7 @@
         android:gravity="center"
         android:text="@string/icon_font_back"
         android:textColor="@color/pub_color_red"
-        android:textSize="40dp" />
+        android:textSize="20dp" />
 
     <!--<ImageView-->
     <!---->
@@ -34,7 +34,7 @@
         android:singleLine="true"
         android:text=""
         android:textColor="@color/pub_color_red"
-        android:textSize="40dp" />
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/tv_right_text"

@@ -17,7 +17,7 @@
             android:layout_weight="1"
             android:text="--"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="10dp" />
 
         <TextView
             android:id="@+id/tv_temp"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="--℃"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="10dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,8 +36,8 @@
 
         <ImageView
             android:id="@+id/image_weather"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
 
         <TextView
             android:id="@+id/tv_weather"
@@ -47,7 +47,7 @@
             android:gravity="right"
             android:text="--"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="10dp" />
     </LinearLayout>
 
     <!--<ListView-->

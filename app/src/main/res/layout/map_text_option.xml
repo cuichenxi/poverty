@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="上海"
         android:textColor="#333"
-        android:textSize="28dp" />
+        android:textSize="14dp" />
 
     <com.framework.view.IFView
         android:id="@+id/image"
@@ -20,5 +20,5 @@
         android:layout_marginTop="8dp"
         android:text="@string/icon_font_maker"
         android:textColor="@color/pub_color_red"
-        android:textSize="40dp" />
+        android:textSize="20dp" />
 </LinearLayout>
