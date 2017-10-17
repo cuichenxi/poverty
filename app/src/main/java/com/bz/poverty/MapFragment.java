@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -34,11 +35,16 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolygonOptions;
 import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.overlayutil.DrivingRouteOverlay;
+import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.route.BikingRouteResult;
+import com.baidu.mapapi.search.route.DrivingRouteLine;
+import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
 import com.baidu.mapapi.search.route.IndoorRouteResult;
 import com.baidu.mapapi.search.route.MassTransitRouteResult;
 import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
+import com.baidu.mapapi.search.route.PlanNode;
 import com.baidu.mapapi.search.route.RoutePlanSearch;
 import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
@@ -61,13 +67,13 @@ import java.util.List;
  * Created by chenxi.cui on 2017/9/30.
  */
 
-public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickListener {
+public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickListener ,OnGetRoutePlanResultListener{
     private MapView mMapView;
     private BaiduMap mBaiduMap;
     private MapStatus mMapStatus;
     LatLng centerPoint = new LatLng(33.747383, 115.785038);
-    int pZoom = 11;
-    int cZoom = 13;
+    float pZoom = 11.5f;
+    float cZoom = 13.5f;
     boolean isChild;
     private List<PointItem> pointItems;
     public String name = "谯城区";
@@ -101,6 +107,8 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         };
         recoverStatus(name, false, centerPoint, pZoom);
         Request.startRequest(new BaseParam(), ServiceMap.towns, mHandler);
+        mSearch = RoutePlanSearch.newInstance();
+        mSearch.setOnGetRoutePlanResultListener(this);
 
         mLocationClient = new LocationClient(getContext().getApplicationContext());
         //声明LocationClient类
@@ -193,7 +201,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
 
     }
 
-    private void recoverStatus(String name, boolean hasBack, LatLng cenpt, int zoom) {
+    private void recoverStatus(String name, boolean hasBack, LatLng cenpt, float zoom) {
         setTitleBar(name, hasBack);
 //        LatLng cenpt = new LatLng(33.850643, 115.785038);
         //定义地图状态
@@ -208,15 +216,16 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
 
 
     @Override
-    public boolean onMarkerClick(Marker marker) {
+    public boolean onMarkerClick(final Marker marker) {
 
         Bundle extraInfo = marker.getExtraInfo();
         if (extraInfo == null) {
             return false;
         }
         final PointItem item = (PointItem) extraInfo.getSerializable("item");
+        LatLng point = null;
+        point = new LatLng(item.lon, item.lat);
         if (!isChild) {
-            LatLng point = new LatLng(item.lon, item.lat);
             recoverStatus(item.name, true, point, cZoom);
             isChild = true;
             addOvers(item.children);
@@ -230,7 +239,9 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         TextView tvLink = (TextView) layout.findViewById(R.id.tv_link);
         TextView tvTitle = (TextView) layout.findViewById(R.id.tv_title);
         TextView tvClose = (TextView) layout.findViewById(R.id.tv_close);
+        TextView tvNav = (TextView) layout.findViewById(R.id.tv_nav);
         tvLink.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tvNav.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
         tvTitle.setText(item.name);
         StringBuffer sb = new StringBuffer();
         sb.append("主管单位: ");
@@ -249,6 +260,14 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
                 mBaiduMap.hideInfoWindow();
             }
         });
+
+        tvNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navagation(marker.getPosition(), item.name);
+            }
+        });
+
         tvLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -275,8 +294,18 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         });
         InfoWindow mInfoWindow = new InfoWindow(layout, marker.getPosition(), BitmapHelper.dip2px(getContext(), -100));
         mBaiduMap.showInfoWindow(mInfoWindow);
-        navagation(marker.getPosition(), item.name);
+        setDrivingRoute(startPoint, point);
         return false;
+    }
+    private void setDrivingRoute(LatLng startPoint ,LatLng endPoint) {
+        if (startPoint == null || endPoint == null) {
+            return;
+        }
+        PlanNode stNode = PlanNode.withLocation(startPoint);
+        PlanNode enNode = PlanNode.withLocation(endPoint);
+        DrivingRoutePlanOption drivingRoutePlanOption = new DrivingRoutePlanOption();
+        mSearch.drivingSearch((drivingRoutePlanOption)
+                .from(stNode).to(enNode));
     }
 
     private void addOvers(List<PointItem> pointItems) {
@@ -361,5 +390,80 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         mMapView.onPause();
     }
 
+    // 定制RouteOverly
+    private class MyDrivingRouteOverlay extends DrivingRouteOverlay {
 
+        public MyDrivingRouteOverlay(BaiduMap baiduMap) {
+            super(baiduMap);
+        }
+
+        @Override
+        public BitmapDescriptor getStartMarker() {
+            return BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
+        }
+
+        @Override
+        public BitmapDescriptor getTerminalMarker() {
+            return BitmapDescriptorFactory.fromResource(R.drawable.icon_mark);
+        }
+    }
+    @Override
+    public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
+
+    }
+
+    @Override
+    public void onGetTransitRouteResult(TransitRouteResult transitRouteResult) {
+
+    }
+
+    @Override
+    public void onGetMassTransitRouteResult(MassTransitRouteResult massTransitRouteResult) {
+
+    }
+
+
+    @Override
+    public void onGetDrivingRouteResult(DrivingRouteResult result) {
+        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+            Toast.makeText(getContext(), "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+        }
+        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
+            // 起终点或途经点地址有岐义，通过以下接口获取建议查询信息
+            // result.getSuggestAddrInfo()
+            return;
+        }
+        if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+            if (result.getRouteLines().size() > 1) {
+                DrivingRouteOverlay overlay = new MyDrivingRouteOverlay(mBaiduMap);
+                mBaiduMap.setOnMarkerClickListener(overlay);
+                DrivingRouteLine drivingRouteLine = result.getRouteLines().get(0);
+                overlay.setData(drivingRouteLine);
+                overlay.addToMap();
+                overlay.zoomToSpan();
+                mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomOut());
+            } else if (result.getRouteLines().size() == 1) {
+                DrivingRouteOverlay overlay = new MyDrivingRouteOverlay(mBaiduMap);
+                mBaiduMap.setOnMarkerClickListener(overlay);
+                overlay.setData(result.getRouteLines().get(0));
+                overlay.addToMap();
+                overlay.zoomToSpan();
+                mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomOut());
+            } else {
+                Toast.makeText(getContext(), "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+        }
+    }
+
+    @Override
+    public void onGetIndoorRouteResult(IndoorRouteResult indoorRouteResult) {
+
+    }
+
+    @Override
+    public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
+
+    }
 }
