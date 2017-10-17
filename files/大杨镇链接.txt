@@ -1,0 +1,10 @@
+党建地图
+基本情况 http://dj.qfant.com/index.php/App/Index/baseinfo/id/11
+标准化建设http://dj.qfant.com/index.php/App/Index/news/catid/26
+工作动态http://dj.qfant.com/index.php/App/Index/news/catid/23
+组织生活http://dj.qfant.com/index.php/App/Index/news/catid/20
+党员信息 http://dj.qfant.com/index.php/App/Index/openinfo/id/9
+数字化阵地 http://dj.qfant.com/index.php/App/Index/cameras/id/2
+组织关系转接 http://dj.qfant.com/index.php/App/Index/groupindex
+微信党支部 打开微信
+个人中心 http://dj.qfant.com/index.php/App/User/userinfo

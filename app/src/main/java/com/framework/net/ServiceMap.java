@@ -17,6 +17,7 @@ import com.framework.utils.Enums;
 public enum ServiceMap implements Enums.IType {
     weather("weather", WeatherResult.class),
     towns("towns", PointResult.class),
+    consult("consult", PointResult.class),
 //
     ;
 

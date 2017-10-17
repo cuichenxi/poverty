@@ -1,11 +1,15 @@
 package com.bz.poverty;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.TypedValue;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,6 +25,8 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.PolygonOptions;
+import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
 import com.bz.poverty.PointResult.PointItem;
 import com.framework.activity.BaseFragment;
@@ -28,15 +34,17 @@ import com.framework.domain.param.BaseParam;
 import com.framework.net.NetworkParam;
 import com.framework.net.Request;
 import com.framework.net.ServiceMap;
+import com.framework.utils.ArrayUtils;
 import com.framework.utils.BitmapHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by chenxi.cui on 2017/9/30.
  */
 
-public class MapFragment extends BaseFragment  implements BaiduMap.OnMarkerClickListener {
+public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickListener {
     private MapView mMapView;
     private BaiduMap mBaiduMap;
     private MapStatus mMapStatus;
@@ -75,7 +83,7 @@ public class MapFragment extends BaseFragment  implements BaiduMap.OnMarkerClick
     }
 
 
-    private void recoverStatus(String name ,boolean hasBack,LatLng cenpt,int zoom) {
+    private void recoverStatus(String name, boolean hasBack, LatLng cenpt, int zoom) {
         setTitleBar(name, hasBack);
 //        LatLng cenpt = new LatLng(33.850643, 115.785038);
         //定义地图状态
@@ -96,7 +104,7 @@ public class MapFragment extends BaseFragment  implements BaiduMap.OnMarkerClick
         if (extraInfo == null) {
             return false;
         }
-        PointItem item = (PointItem) extraInfo.getSerializable("item");
+        final PointItem item = (PointItem) extraInfo.getSerializable("item");
         if (!isChild) {
             LatLng point = new LatLng(item.lon, item.lat);
             recoverStatus(item.name, true, point, cZoom);
@@ -107,16 +115,57 @@ public class MapFragment extends BaseFragment  implements BaiduMap.OnMarkerClick
         if (item == null) {
             return false;
         }
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setBackgroundResource(R.drawable.hotel_map_marker_hotel_bg);
-        layout.setPadding(BitmapHelper.dip2px(getContext(), 8), BitmapHelper.dip2px(getContext(), 8), BitmapHelper.dip2px(getContext(), 8), BitmapHelper.dip2px(getContext(), 8));
-        TextView textView = new TextView(getContext());
-        layout.addView(textView);
-        textView.setText(item.baseinfo);
-        textView.setTextColor(getResources().getColor(R.color.pub_color_black));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        InfoWindow mInfoWindow = new InfoWindow(layout, marker.getPosition(), BitmapHelper.dip2px(getContext(),-45));
+        View layout = LinearLayout.inflate(getContext(), R.layout.map_marker_window_info, null);
+        TextView tvInfo = (TextView) layout.findViewById(R.id.tv_info);
+        TextView tvLink = (TextView) layout.findViewById(R.id.tv_link);
+        TextView tvTitle = (TextView) layout.findViewById(R.id.tv_title);
+        TextView tvClose = (TextView) layout.findViewById(R.id.tv_close);
+        tvLink.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tvTitle.setText(item.name);
+        StringBuffer sb = new StringBuffer();
+        sb.append("主管单位: ");
+        sb.append(item.intro);
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("负责人:");
+        sb.append("  ");
+        sb.append(item.contact);
+        sb.append("  ");
+        sb.append(item.tel);
+        tvInfo.setText(sb.toString());
+        tvClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mBaiduMap.hideInfoWindow();
+            }
+        });
+        tvLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText et = new EditText(getContext());
+                new AlertDialog.Builder(getContext(), R.style.list_dialog_style)
+                        .setTitle("请输入您想要咨询或预约办理的事项及您的联系方式")
+                        .setView(et)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                String input = et.getText().toString();
+                                MapParam mapParam = new MapParam();
+                                if (TextUtils.isEmpty(input)) {
+                                    showToast("请输入您想要咨询或预约办理的事项及您的联系方式");
+                                    return;
+                                }
+                                mapParam.content = input;
+                                mapParam.villageid = item.id;
+                                Request.startRequest(mapParam, ServiceMap.consult, mHandler, Request.RequestFeature.BLOCK);
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .show();
+            }
+        });
+        InfoWindow mInfoWindow = new InfoWindow(layout, marker.getPosition(), BitmapHelper.dip2px(getContext(), -100));
         mBaiduMap.showInfoWindow(mInfoWindow);
+
         return false;
     }
 
@@ -138,7 +187,7 @@ public class MapFragment extends BaseFragment  implements BaiduMap.OnMarkerClick
 //            if (!isChild) {
 //                text.setVisibility(View.GONE);
 //            }else {
-                text.setVisibility(View.VISIBLE);
+            text.setVisibility(View.VISIBLE);
 //            }
 //构建Marker图标
             BitmapDescriptor bitmap = BitmapDescriptorFactory
@@ -149,10 +198,28 @@ public class MapFragment extends BaseFragment  implements BaiduMap.OnMarkerClick
                     .extraInfo(bundle)
                     .icon(bitmap);
             mBaiduMap.addOverlay(option);
+            addPloygo(item.boundary);
         }
-//在地图上添加Marker，并显示
-//        mBaiduMap.addOverlays(ls);
     }
+
+    private void addPloygo(List<PointItem> ps) {
+        if (ArrayUtils.isEmpty(ps) || ps.size() <= 2) {
+            return;
+        }
+        List<LatLng> pts = new ArrayList<LatLng>();
+        for (PointItem item : ps) {
+            LatLng point = new LatLng(item.lon, item.lat);
+            pts.add(point);
+        }
+//构建用户绘制多边形的Option对象
+        OverlayOptions polygonOption = new PolygonOptions()
+                .points(pts)
+                .stroke(new Stroke(5, 0xFFB42031))
+                .fillColor(0x00ffffff);
+//在地图上添加多边形Option，用于显示
+        mBaiduMap.addOverlay(polygonOption);
+    }
+
     @Override
     public boolean onMsgSearchComplete(NetworkParam param) {
         if (ServiceMap.towns == param.key) {

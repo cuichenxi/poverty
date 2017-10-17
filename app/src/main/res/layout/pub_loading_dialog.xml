@@ -29,7 +29,7 @@
             android:gravity="center"
             android:textColor="#FFF"
             android:paddingLeft="10dp"
-            android:text="@string/state_loading" />
+            android:text="发送中..." />
     </LinearLayout>
 
     <ImageButton
