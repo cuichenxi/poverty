@@ -214,7 +214,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
 //构建用户绘制多边形的Option对象
         OverlayOptions polygonOption = new PolygonOptions()
                 .points(pts)
-                .stroke(new Stroke(10, 0xFFB42031))
+                .stroke(new Stroke(5, 0xFFB42031))
                 .fillColor(0x00ffffff);
 //在地图上添加多边形Option，用于显示
         mBaiduMap.addOverlay(polygonOption);
