@@ -5,12 +5,10 @@ import android.content.DialogInterface;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +27,6 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationConfiguration;
-import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolygonOptions;
 import com.baidu.mapapi.map.Stroke;
@@ -82,6 +78,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
     private LatLng startPoint;
 
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -115,7 +112,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         mLocationClient.registerLocationListener(new BDLocationListener() {
             @Override
             public void onReceiveLocation(BDLocation bdLocation) {
-                startPoint = new LatLng(bdLocation.getLongitude(), bdLocation.getLatitude());
+                startPoint = new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
 //                startPoint = centerPoint;
                 Log.v("xxxxxx", "getLongitude"+bdLocation.getLongitude() + "getLatitude"+bdLocation.getLatitude() );
                 addMyLat(startPoint);
@@ -272,28 +269,11 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
             @Override
             public void onClick(View view) {
 //                final EditText et = new EditText(getContext());
-                new AlertDialog.Builder(getContext(), R.style.list_dialog_style)
-                        .setMessage("数字化阵地")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                String url = "http://dj.qfant.com/index.php/App/Index/equipment/villageid/" + item.id;
-                                Bundle bundle = new Bundle();
-                                bundle.putString("url", url);
-                                bundle.putString("title", "数字化阵地");
-                                qStartActivity(WebActivity.class, bundle);
-//                                String input = et.getText().toString();
-//                                MapParam mapParam = new MapParam();
-//                                if (TextUtils.isEmpty(input)) {
-//                                    showToast("请输入您想要咨询或预约办理的事项及您的联系方式");
-//                                    return;
-//                                }
-//                                mapParam.content = input;
-//                                mapParam.villageid = item.id;
-//                                Request.startRequest(mapParam, ServiceMap.consult, mHandler, Request.RequestFeature.BLOCK);
-                            }
-                        })
-                        .setNegativeButton("取消", null)
-                        .show();
+                String url = "http://dj.qfant.com/index.php/App/Index/equipment/villageid/" + item.id;
+                Bundle bundle = new Bundle();
+                bundle.putString("url", url);
+                bundle.putString("title", "数字化阵地");
+                qStartActivity(WebActivity.class, bundle);
             }
         });
         InfoWindow mInfoWindow = new InfoWindow(layout, marker.getPosition(), BitmapHelper.dip2px(getContext(), -100));
@@ -305,11 +285,13 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         if (startPoint == null || endPoint == null) {
             return;
         }
+//        mSearch.destroy();
         PlanNode stNode = PlanNode.withLocation(startPoint);
         PlanNode enNode = PlanNode.withLocation(endPoint);
         DrivingRoutePlanOption drivingRoutePlanOption = new DrivingRoutePlanOption();
         mSearch.drivingSearch((drivingRoutePlanOption)
                 .from(stNode).to(enNode));
+
     }
 
     private void addOvers(List<PointItem> pointItems) {
@@ -342,8 +324,25 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
                     .extraInfo(bundle)
                     .icon(bitmap);
             mBaiduMap.addOverlay(option);
-            addPloygo(item.boundary);
+//            addPloygo(item.boundary);
+
+            if (!ArrayUtils.isEmpty(item.boundary) && item.boundary.size() > 2) {
+                ArrayList<LatLng> pts= new ArrayList<LatLng>();
+                for (PointItem item1 : item.boundary) {
+                    LatLng point1 = new LatLng(item1.lon, item1.lat);
+                    pts.add(point1);
+                }
+                if (!ArrayUtils.isEmpty(pts)) {
+                    OverlayOptions polygonOption = new PolygonOptions()
+                            .points(pts)
+                            .stroke(new Stroke(2, 0xFFB42031))
+                            .fillColor(0x00ffffff);
+//在地图上添加多边形Option，用于显示
+                    mBaiduMap.addOverlay(polygonOption);
+                }
+            }
         }
+
     }
 
     private void addPloygo(List<PointItem> ps) {
@@ -440,19 +439,21 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
             if (result.getRouteLines().size() > 1) {
                 DrivingRouteOverlay overlay = new MyDrivingRouteOverlay(mBaiduMap);
+                overlay.removeFromMap();
                 mBaiduMap.setOnMarkerClickListener(overlay);
                 DrivingRouteLine drivingRouteLine = result.getRouteLines().get(0);
                 overlay.setData(drivingRouteLine);
                 overlay.addToMap();
-                overlay.zoomToSpan();
-                mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomOut());
+//                overlay.zoomToSpan();
+//                mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomOut());
             } else if (result.getRouteLines().size() == 1) {
                 DrivingRouteOverlay overlay = new MyDrivingRouteOverlay(mBaiduMap);
+                overlay.removeFromMap();
                 mBaiduMap.setOnMarkerClickListener(overlay);
                 overlay.setData(result.getRouteLines().get(0));
                 overlay.addToMap();
-                overlay.zoomToSpan();
-                mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomOut());
+//                overlay.zoomToSpan();
+//                mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomOut());
             } else {
                 Toast.makeText(getContext(), "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
                 return;
