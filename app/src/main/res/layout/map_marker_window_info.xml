@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:maxWidth="200dp"
             android:padding="5dp"
-            android:text="党员阵地"
+            android:text="数字化阵地"
             android:textColor="#3E97FA"
             android:textSize="14dp" />
 
