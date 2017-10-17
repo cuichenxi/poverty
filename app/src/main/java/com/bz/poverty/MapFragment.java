@@ -116,7 +116,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
             @Override
             public void onReceiveLocation(BDLocation bdLocation) {
                 startPoint = new LatLng(bdLocation.getLongitude(), bdLocation.getLatitude());
-                startPoint = centerPoint;
+//                startPoint = centerPoint;
                 Log.v("xxxxxx", "getLongitude"+bdLocation.getLongitude() + "getLatitude"+bdLocation.getLatitude() );
                 addMyLat(startPoint);
             }
@@ -271,21 +271,25 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         tvLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText et = new EditText(getContext());
+//                final EditText et = new EditText(getContext());
                 new AlertDialog.Builder(getContext(), R.style.list_dialog_style)
-                        .setTitle("请输入您想要咨询或预约办理的事项及您的联系方式")
-                        .setView(et)
+                        .setMessage("数字化阵地")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                String input = et.getText().toString();
-                                MapParam mapParam = new MapParam();
-                                if (TextUtils.isEmpty(input)) {
-                                    showToast("请输入您想要咨询或预约办理的事项及您的联系方式");
-                                    return;
-                                }
-                                mapParam.content = input;
-                                mapParam.villageid = item.id;
-                                Request.startRequest(mapParam, ServiceMap.consult, mHandler, Request.RequestFeature.BLOCK);
+                                String url = "http://dj.qfant.com/index.php/App/Index/equipment/villageid/" + item.id;
+                                Bundle bundle = new Bundle();
+                                bundle.putString("url", url);
+                                bundle.putString("title", "数字化阵地");
+                                qStartActivity(WebActivity.class, bundle);
+//                                String input = et.getText().toString();
+//                                MapParam mapParam = new MapParam();
+//                                if (TextUtils.isEmpty(input)) {
+//                                    showToast("请输入您想要咨询或预约办理的事项及您的联系方式");
+//                                    return;
+//                                }
+//                                mapParam.content = input;
+//                                mapParam.villageid = item.id;
+//                                Request.startRequest(mapParam, ServiceMap.consult, mHandler, Request.RequestFeature.BLOCK);
                             }
                         })
                         .setNegativeButton("取消", null)
