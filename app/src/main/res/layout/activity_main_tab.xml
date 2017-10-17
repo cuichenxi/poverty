@@ -2,56 +2,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/ll_menu"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#99333333"
-        android:focusable="true"
-        android:orientation="vertical">
+    <!--<LinearLayout-->
+    <!--android:visibility="gone"-->
+    <!--android:id="@+id/ll_menu"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="#99333333"-->
+    <!--android:focusable="true"-->
+    <!--android:orientation="vertical">-->
 
-        <com.bz.poverty.WeatherLayout
-            android:id="@+id/weather_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="14dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="10dp"
-            android:visibility="visible" />
+    <!--<com.bz.poverty.WeatherLayout-->
+    <!--android:id="@+id/weather_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:layout_marginTop="14dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:visibility="visible" />-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="10dp"
-            android:background="#fff" />
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="2dp"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:background="#fff" />-->
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            >
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:scrollbars="none"-->
+    <!--&gt;-->
 
-            <com.framework.view.tab.TabLayout
-                android:id="@+id/tl_tab"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </ScrollView>
+    <!--<com.framework.view.tab.TabLayout-->
+    <!--android:id="@+id/tl_tab1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+    <!--</ScrollView>-->
 
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4">
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="4">-->
 
-        <FrameLayout
-            android:id="@+id/fl_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></FrameLayout>
-    </LinearLayout>
+    <!--</LinearLayout>-->
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.framework.view.tab.TabLayout
+        android:id="@+id/tl_tab"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 </LinearLayout>

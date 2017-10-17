@@ -44,7 +44,7 @@ public class TabView extends LinearLayout implements View.OnClickListener {
     }
 
     private void initView(Context context) {
-        setOrientation(HORIZONTAL);
+        setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);
 //        setBackgroundResource(R.drawable.pub_tabview_bg_selector);
         LinearLayout.inflate(context, R.layout.pub_tabview_layout, this);
