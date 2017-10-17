@@ -43,7 +43,7 @@ public class MainActivity extends MainTabActivity {
 //        addTab("微信党支部", WebFragment.class, getBundle("微信党支部","http://dj.qfant.com/index.php/App/Index/dangyuan"), R.drawable.iocn_signin);
 //        addTab("个人中心", WebFragment.class, getBundle("个人中心","http://dj.qfant.com/index.php/App/User/userinfo"), R.drawable.icon_usercenter);
         onPostCreate();
-        initView();
+//        initView();
     }
 
     private void initView() {

@@ -35,7 +35,7 @@ public class TabLayout extends LinearLayout implements View.OnClickListener {
     }
 
     private void initView() {
-        setOrientation(VERTICAL);
+        setOrientation(HORIZONTAL);
     }
 
     public void setCurrentTab(int i) {
@@ -62,8 +62,8 @@ public class TabLayout extends LinearLayout implements View.OnClickListener {
     public void initData(ArrayList<TabItem> tabs, OnTabClickListener listener) {
         this.tabs = tabs;
         this.listener = listener;
-//        LayoutParams params = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-//        params.weight = 1;
+        LayoutParams params = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.weight = 1;
         if (!ArrayUtils.isEmpty(tabs)) {
             tabCount = tabs.size();
             TabView mTabView = null;
@@ -72,7 +72,7 @@ public class TabLayout extends LinearLayout implements View.OnClickListener {
                 mTabView.setTag(tabs.get(i));
                 mTabView.initData(tabs.get(i));
                 mTabView.setOnClickListener(this);
-                addView(mTabView);
+                addView(mTabView,params);
             }
 
         } else {

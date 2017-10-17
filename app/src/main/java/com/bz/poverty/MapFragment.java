@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -24,10 +28,23 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationConfiguration;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolygonOptions;
 import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.route.BikingRouteResult;
+import com.baidu.mapapi.search.route.DrivingRouteResult;
+import com.baidu.mapapi.search.route.IndoorRouteResult;
+import com.baidu.mapapi.search.route.MassTransitRouteResult;
+import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.baidu.mapapi.search.route.TransitRouteResult;
+import com.baidu.mapapi.search.route.WalkingRouteResult;
+import com.baidu.mapapi.utils.OpenClientUtil;
+import com.baidu.mapapi.utils.route.BaiduMapRoutePlan;
+import com.baidu.mapapi.utils.route.RouteParaOption;
 import com.bz.poverty.PointResult.PointItem;
 import com.framework.activity.BaseFragment;
 import com.framework.domain.param.BaseParam;
@@ -54,6 +71,10 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
     boolean isChild;
     private List<PointItem> pointItems;
     public String name = "谯城区";
+    private RoutePlanSearch mSearch;
+    public LocationClient mLocationClient = null;
+    private LatLng startPoint;
+
 
     @Nullable
     @Override
@@ -80,8 +101,97 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         };
         recoverStatus(name, false, centerPoint, pZoom);
         Request.startRequest(new BaseParam(), ServiceMap.towns, mHandler);
+
+        mLocationClient = new LocationClient(getContext().getApplicationContext());
+        //声明LocationClient类
+        mLocationClient.registerLocationListener(new BDLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                startPoint = new LatLng(bdLocation.getLongitude(), bdLocation.getLatitude());
+                startPoint = centerPoint;
+                Log.v("xxxxxx", "getLongitude"+bdLocation.getLongitude() + "getLatitude"+bdLocation.getLatitude() );
+                addMyLat(startPoint);
+            }
+        });
+        mLocationClient.start();
+
     }
 
+    private void addMyLat(LatLng mLatLng) {
+
+        View inflate = LayoutInflater.from(getContext()).inflate(R.layout.map_text_option_me, null);
+        TextView text = (TextView) inflate.findViewById(R.id.text);
+        text.setText("我的位置");
+        text.setVisibility(View.VISIBLE);
+        BitmapDescriptor bitmap = BitmapDescriptorFactory
+                .fromView(inflate);
+        OverlayOptions option = new MarkerOptions()
+                .position(mLatLng)
+                .icon(bitmap);
+        mBaiduMap.addOverlay(option);
+    }
+
+
+    private void navagation(LatLng endPoint, String name) {
+        if (startPoint == null || endPoint == null) {
+            return;
+        }
+        final List<String> list = new ArrayList<String>();
+        if (HotelOpenNativeMap.isAvilible(getContext(), "com.baidu.BaiduMap")) {
+            list.add("百度地图");
+        }
+        if (HotelOpenNativeMap.isAvilible(getContext(), "com.autonavi.minimap")) {
+            list.add("高德地图");
+        }
+        if (ArrayUtils.isEmpty(list)) {
+            startRoutePlanDriving(startPoint, endPoint);
+            return;
+        }
+        String s = list.get(0);
+        if (s.equals("高德地图")) {
+            HotelOpenNativeMap.startNative_Gaode(getContext(), endPoint, name, "扶贫");
+        } else if (s.equals("百度地图")) {
+            startRoutePlanDriving(startPoint, endPoint);
+        }
+    }
+
+    /**
+     * 启动百度地图公交路线规划
+     *
+     * @param startPoint
+     * @param endPoint
+     */
+    public void startRoutePlanDriving(LatLng startPoint, LatLng endPoint) {
+
+        // 构建 route搜索参数
+        RouteParaOption para = new RouteParaOption()
+                .startPoint(startPoint).endPoint(endPoint).busStrategyType(RouteParaOption.EBusStrategyType.bus_recommend_way);
+        try {
+            BaiduMapRoutePlan.openBaiduMapDrivingRoute(para, getContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setMessage("您尚未安装百度地图app或app版本过低，点击确认安装？");
+            builder.setTitle("提示");
+            builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    OpenClientUtil.getLatestBaiduMapApp(getContext());
+                }
+            });
+
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.create().show();
+        }
+
+    }
 
     private void recoverStatus(String name, boolean hasBack, LatLng cenpt, int zoom) {
         setTitleBar(name, hasBack);
@@ -165,15 +275,16 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         });
         InfoWindow mInfoWindow = new InfoWindow(layout, marker.getPosition(), BitmapHelper.dip2px(getContext(), -100));
         mBaiduMap.showInfoWindow(mInfoWindow);
-
+        navagation(marker.getPosition(), item.name);
         return false;
     }
 
     private void addOvers(List<PointItem> pointItems) {
+        mBaiduMap.clear();
+        addMyLat(startPoint);
         if (pointItems == null) {
             return;
         }
-        mBaiduMap.clear();
 //        List<OverlayOptions> ls = new ArrayList<>();
         for (PointItem item : pointItems) {
             //定义Maker坐标点

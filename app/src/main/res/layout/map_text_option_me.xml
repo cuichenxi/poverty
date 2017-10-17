@@ -22,12 +22,11 @@
             android:textSize="14dp" />
     </LinearLayout>
 
-    <com.framework.view.IFView
+    <ImageView
         android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/icon_font_maker"
-        android:textColor="@color/pub_color_red"
-        android:textSize="20dp" />
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/icon_gcoding"
+        />
 </LinearLayout>
