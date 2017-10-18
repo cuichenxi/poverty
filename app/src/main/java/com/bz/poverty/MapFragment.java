@@ -113,7 +113,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
             @Override
             public void onReceiveLocation(BDLocation bdLocation) {
                 startPoint = new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
-//                startPoint = centerPoint;
+                startPoint = centerPoint;
                 Log.v("xxxxxx", "getLongitude"+bdLocation.getLongitude() + "getLatitude"+bdLocation.getLatitude() );
                 addMyLat(startPoint);
             }
@@ -126,7 +126,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
 
         View inflate = LayoutInflater.from(getContext()).inflate(R.layout.map_text_option_me, null);
         TextView text = (TextView) inflate.findViewById(R.id.text);
-        text.setText("我的位置");
+        text.setText("");
         text.setVisibility(View.VISIBLE);
         BitmapDescriptor bitmap = BitmapDescriptorFactory
                 .fromView(inflate);
@@ -450,7 +450,6 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
             if (result.getRouteLines().size() > 1) {
                 DrivingRouteOverlay overlay = new MyDrivingRouteOverlay(mBaiduMap);
-                overlay.removeFromMap();
 //                mBaiduMap.setOnMarkerClickListener(overlay);
                 DrivingRouteLine drivingRouteLine = result.getRouteLines().get(0);
                 overlay.setData(drivingRouteLine);
@@ -458,9 +457,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
 //                overlay.zoomToSpan();
 //                mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomOut());
             } else if (result.getRouteLines().size() == 1) {
-                mBaiduMap.clear();
                 DrivingRouteOverlay overlay = new MyDrivingRouteOverlay(mBaiduMap);
-                overlay.removeFromMap();
 //                mBaiduMap.setOnMarkerClickListener(overlay);
                 overlay.setData(result.getRouteLines().get(0));
                 overlay.addToMap();
