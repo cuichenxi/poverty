@@ -76,7 +76,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
     private RoutePlanSearch mSearch;
     public LocationClient mLocationClient = null;
     private LatLng startPoint;
-
+    private PointItem tempPointItem;
 
 
     @Nullable
@@ -220,9 +220,13 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
             return false;
         }
         final PointItem item = (PointItem) extraInfo.getSerializable("item");
+        if (item == null) {
+            return false;
+        }
         LatLng point = null;
         point = new LatLng(item.lon, item.lat);
         if (!isChild) {
+            tempPointItem = item;
             recoverStatus(item.name, true, point, cZoom);
             isChild = true;
             addOvers(item.children);
@@ -254,7 +258,11 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         tvClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mBaiduMap.hideInfoWindow();
+//                mBaiduMap.hideInfoWindow();
+//                mBaiduMap.clear();
+//                recoverStatus(item.name, true, finalPoint, cZoom);
+//                isChild = true;
+                addOvers(tempPointItem.children);
             }
         });
 
@@ -377,7 +385,9 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mMapView.onDestroy();
+        if (mMapView != null) {
+//        mMapView.onDestroy();
+        }
     }
 
     @Override
@@ -440,16 +450,17 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
             if (result.getRouteLines().size() > 1) {
                 DrivingRouteOverlay overlay = new MyDrivingRouteOverlay(mBaiduMap);
                 overlay.removeFromMap();
-                mBaiduMap.setOnMarkerClickListener(overlay);
+//                mBaiduMap.setOnMarkerClickListener(overlay);
                 DrivingRouteLine drivingRouteLine = result.getRouteLines().get(0);
                 overlay.setData(drivingRouteLine);
                 overlay.addToMap();
 //                overlay.zoomToSpan();
 //                mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomOut());
             } else if (result.getRouteLines().size() == 1) {
+                mBaiduMap.clear();
                 DrivingRouteOverlay overlay = new MyDrivingRouteOverlay(mBaiduMap);
                 overlay.removeFromMap();
-                mBaiduMap.setOnMarkerClickListener(overlay);
+//                mBaiduMap.setOnMarkerClickListener(overlay);
                 overlay.setData(result.getRouteLines().get(0));
                 overlay.addToMap();
 //                overlay.zoomToSpan();
