@@ -232,6 +232,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
             addOvers(item.children);
             return false;
         }
+        addOvers(tempPointItem.children);
         if (item == null) {
             return false;
         }
