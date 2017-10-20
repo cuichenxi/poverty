@@ -50,7 +50,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".WebActivity"/>
+        <activity
+            android:name=".WebActivity"
+            android:hardwareAccelerated="true" />
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

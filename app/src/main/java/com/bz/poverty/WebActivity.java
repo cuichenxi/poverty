@@ -1,5 +1,6 @@
 package com.bz.poverty;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -38,7 +39,16 @@ public class WebActivity extends BaseActivity {
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setAppCacheEnabled(true);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setPluginState(WebSettings.PluginState.ON);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 不加载缓存内容
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        webView.getSettings().setUseWideViewPort(true);
+//        webView.addJavascriptInterface(new MyJavaScript(), "JsUtils");
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
