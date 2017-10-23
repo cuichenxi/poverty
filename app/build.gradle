@@ -11,7 +11,25 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
     }
+    signingConfigs {
+        debug {
+            storeFile file('../debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+        release {
+            storeFile file('release.jks')
+            storePassword 'ifont.123'
+            keyAlias 'ifontkey'
+            keyPassword 'ifont.123'
+        }
+    }
+
     buildTypes {
         debug {
             zipAlignEnabled false
@@ -24,19 +42,17 @@ android {
             renderscriptDebuggable false
         }
         release {
+            zipAlignEnabled false
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            debuggable true
+            jniDebuggable false
+            renderscriptDebuggable false
         }
     }
-    signingConfigs {
 
-        debug {
-            storeFile file('../debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-        }
-    }
 }
 
 dependencies {
