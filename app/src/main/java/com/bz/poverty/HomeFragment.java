@@ -47,6 +47,7 @@ public class HomeFragment extends BaseFragment {
         llRoot.addView(videoView, layoutParams);
         mc = new MediaController(getContext());
 //        videoView.setVideoURI(Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.b));
+        videoView.setVideoURI(Uri.parse("rtmp://7ae2b574.server.topvdn.com:1935/live/537025757_134283008_1508576809_6e52fc80d87a4c386d95cdf5a7954df9"));
         videoView.setMediaController(mc);
         videoView.requestFocus();
         videoView.start();

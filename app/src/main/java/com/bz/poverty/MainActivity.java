@@ -31,7 +31,7 @@ public class MainActivity extends MainTabActivity {
         tlTab = (TabLayout) findViewById(R.id.tl_tab);
         weatherView = (WeatherLayout) findViewById(R.id.weather_view);
         tabLayout = tlTab;
-//        addTab("首页", HomeFragment.class, myBundle, R.drawable.icon_userinfo);
+        addTab("首页", HomeFragment.class, myBundle, R.drawable.icon_userinfo);
         addTab("党建地图", MapFragment.class, myBundle, R.drawable.icon_mark);
         addTab("基本情况", WebFragment.class, getBundle("基本情况","http://dj.qfant.com/index.php/App/Index/baseinfo/id/11"), R.drawable.icon_online);
         addTab("标准化建设", WebFragment.class, getBundle("标准化建设","http://dj.qfant.com/index.php/App/Index/news/catid/26"), R.drawable.icon_feature);
