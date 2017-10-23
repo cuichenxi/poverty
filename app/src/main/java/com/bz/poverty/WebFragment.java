@@ -10,10 +10,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.framework.activity.BaseFragment;
-import com.framework.domain.param.BaseParam;
-import com.framework.net.NetworkParam;
-import com.framework.net.Request;
-import com.framework.net.ServiceMap;
 
 /**
  * Created by chenxi.cui on 2017/9/30.

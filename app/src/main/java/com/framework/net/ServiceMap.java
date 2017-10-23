@@ -1,6 +1,7 @@
 package com.framework.net;
 
 
+import com.bz.poverty.EquipmentResult;
 import com.bz.poverty.PointResult;
 import com.bz.poverty.WeatherResult;
 import com.framework.domain.response.BaseResult;
@@ -13,10 +14,12 @@ import com.framework.utils.Enums;
 //    党建资讯http://dj.qfant.com/index.php/App/Index/news
 //    组织生活http://dj.qfant.com/index.php/App/Index/group
 //    党员信息http://dj.qfant.com/index.php/App/Index/dangyuan
+http://dj.qfant.com/index.php/App/Index/equipments
  */
 public enum ServiceMap implements Enums.IType {
     weather("weather", WeatherResult.class),
     towns("towns", PointResult.class),
+    equipments("equipments", EquipmentResult.class),
     consult("consult", PointResult.class),
 //
     ;
