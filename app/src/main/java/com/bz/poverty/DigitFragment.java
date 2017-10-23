@@ -26,7 +26,7 @@ import java.util.List;
 public class DigitFragment extends BaseFragment {
 
     private GridView gridView;
-    private EquipmentResult result;
+    private EquipmentsResult result;
     private MAdapter mAdapter;
 
     @Nullable
@@ -49,11 +49,11 @@ public class DigitFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Object item = adapterView.getAdapter().getItem(i);
-                if (item instanceof EquipmentResult.EquipmentData) {
-                    EquipmentResult.EquipmentData data = (EquipmentResult.EquipmentData) item;
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("item", data);
-                    qStartActivity(PlayerActivity.class, bundle);
+                if (item instanceof EquipmentsResult.EquipmentData) {
+                    EquipmentsResult.EquipmentData data = (EquipmentsResult.EquipmentData) item;
+                    UrlParam urlParam = new UrlParam();
+                    urlParam.id = data.id;
+                    Request.startRequest(urlParam, ServiceMap.equipment, mHandler, Request.RequestFeature.BLOCK);
                 }
             }
         });
@@ -77,9 +77,20 @@ public class DigitFragment extends BaseFragment {
     public boolean onMsgSearchComplete(NetworkParam param) {
         if (param.key == ServiceMap.equipments) {
             if (param.result.bstatus.code == 0) {
-                result = (EquipmentResult) param.result;
+                result = (EquipmentsResult) param.result;
                 mAdapter.setData(result.data);
             }
+        } else if (param.key == ServiceMap.equipment) {
+            if (param.result.bstatus.code == 0) {
+                EquipResult equipResult = (EquipResult) param.result;
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("item", equipResult.data);
+                qStartActivity(PlayerActivity.class, bundle);
+            } else {
+                showToast(param.result.bstatus.des);
+            }
+
+
         }
         return super.onMsgSearchComplete(param);
     }
@@ -88,9 +99,13 @@ public class DigitFragment extends BaseFragment {
         public int townid = 24;
     }
 
+    public static class UrlParam extends BaseParam {
+        public int id = 24;
+    }
+
     private class MAdapter extends BaseAdapter {
 
-        private List<EquipmentResult.EquipmentData> data;
+        private List<EquipmentsResult.EquipmentData> data;
 
         @Override
         public int getCount() {
@@ -111,17 +126,17 @@ public class DigitFragment extends BaseFragment {
         public View getView(int i, View view, ViewGroup viewGroup) {
             View inflate = LinearLayout.inflate(getContext(), R.layout.digit_item, null);
             TextView textView = (TextView) inflate.findViewById(R.id.text_title);
-            EquipmentResult.EquipmentData equipmentData = data.get(i);
+            EquipmentsResult.EquipmentData equipmentData = data.get(i);
             if (equipmentData != null) {
                 textView.setText(equipmentData.name);
-            }else {
+            } else {
                 textView.setText("");
             }
 
             return inflate;
         }
 
-        public void setData(List<EquipmentResult.EquipmentData> data) {
+        public void setData(List<EquipmentsResult.EquipmentData> data) {
             this.data = data;
             notifyDataSetChanged();
         }

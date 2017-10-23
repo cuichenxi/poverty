@@ -25,13 +25,16 @@ public class PlayerActivity extends BaseActivity implements View.OnTouchListener
         setContentView(R.layout.activity_player);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        EquipmentResult.EquipmentData item = (EquipmentResult.EquipmentData) myBundle.getSerializable("item");
+        EquipResult.EquipData item = (EquipResult.EquipData) myBundle.getSerializable("item");
         if (item != null) {
             setTitleBar(item.name, true);
+        }else {
+            return;
         }
+
         videoView = (VideoView) findViewById(R.id.videoView);
         videoView.setOnTouchListener(this);
-        videoView.playVideo(playUrl);
+        videoView.playVideo(item.rtmp);
         //videoView.playLyyRTMPVideo("");
         //videoView.startLyyAudio();
     }
