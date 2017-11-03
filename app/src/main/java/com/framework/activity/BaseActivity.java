@@ -782,7 +782,7 @@ public abstract class BaseActivity extends FragmentActivity implements
         return super.dispatchTouchEvent(ev);
     }
 
-    private final OnClickListener titleBarClickListener = new OnClickListener() {
+    public OnClickListener titleBarClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
 
