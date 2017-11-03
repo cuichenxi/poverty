@@ -115,12 +115,23 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         if (item == null) {
             return false;
         }
+        requstVillageInfo(item.id);
+        return false;
+    }
+
+    private void showInfoWindow( final PointItem item) {
         View layout = LinearLayout.inflate(getContext(), R.layout.map_marker_window_info, null);
         TextView tvInfo = (TextView) layout.findViewById(R.id.tv_info);
         TextView tvLink = (TextView) layout.findViewById(R.id.tv_link);
         TextView tvTitle = (TextView) layout.findViewById(R.id.tv_title);
         TextView tvClose = (TextView) layout.findViewById(R.id.tv_close);
+        TextView tvLink1 = (TextView) layout.findViewById(R.id.tv_link1);
+        TextView tvLink2 = (TextView) layout.findViewById(R.id.tv_link2);
+        TextView tvLink3 = (TextView) layout.findViewById(R.id.tv_link3);
         tvLink.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tvLink1.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tvLink2.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tvLink3.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
         tvTitle.setText(item.name);
         StringBuffer sb = new StringBuffer();
         sb.append("主管单位: ");
@@ -163,10 +174,47 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
                         .show();
             }
         });
-        InfoWindow mInfoWindow = new InfoWindow(layout, marker.getPosition(), BitmapHelper.dip2px(getContext(), -100));
+        tvLink1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("title", item.name);
+                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/baseinfo/" + item.id);
+                qStartActivity(WebActivity.class, bundle);
+            }
+        });
+        tvLink2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("title", item.name);
+                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/baseinfo/" + item.id);
+                qStartActivity(WebActivity.class, bundle);
+            }
+        });
+        tvLink3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("title", item.name);
+                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/baseinfo/" + item.id);
+                qStartActivity(WebActivity.class, bundle);
+            }
+        });
+        LatLng point = new LatLng(item.lon, item.lat);
+        InfoWindow mInfoWindow = new InfoWindow(layout, point, BitmapHelper.dip2px(getContext(), -100));
         mBaiduMap.showInfoWindow(mInfoWindow);
+    }
 
-        return false;
+    public static class VillageInfoParam extends BaseParam {
+        //    villageid content
+        public String id;
+    }
+
+    private void requstVillageInfo(String id) {
+        VillageInfoParam param = new VillageInfoParam();
+        param.id = id;
+        Request.startRequest(param, ServiceMap.villageInfo, mHandler, Request.RequestFeature.BLOCK);
     }
 
     private void addOvers(List<PointItem> pointItems) {
@@ -227,6 +275,9 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
             pointItems = result.data;
             isChild = false;
             addOvers(pointItems);
+        }else if (ServiceMap.villageInfo == param.key) {
+            VillageInfoResult result = (VillageInfoResult) param.result;
+            showInfoWindow(result.data);
         }
         return super.onMsgSearchComplete(param);
     }

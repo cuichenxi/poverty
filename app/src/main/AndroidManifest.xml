@@ -52,6 +52,9 @@
         <activity
             android:name=".PlayerActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".WebActivity"
+            android:screenOrientation="landscape" />
 
         <service
             android:name="com.baidu.location.f"
