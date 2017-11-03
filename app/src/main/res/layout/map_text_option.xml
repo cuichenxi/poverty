@@ -8,27 +8,26 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/pub_color_red"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/text"
-            android:padding="4dp"
+        android:background="@color/transparent"
+        android:orientation="horizontal">
+        <com.framework.view.IFView
+            android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
+            android:layout_marginTop="0dp"
+            android:text="@string/icon_font_maker"
+            android:textColor="@color/pub_color_red"
+            android:textSize="14dp" />
+        <TextView
+            android:id="@+id/text"
+            android:padding="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
             android:background="#fff"
             android:text="上海"
-            android:textColor="#333"
-            android:textSize="28dp" />
+            android:textColor="@color/pub_color_red"
+            android:textSize="14dp" />
     </LinearLayout>
 
-    <com.framework.view.IFView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/icon_font_maker"
-        android:textColor="@color/pub_color_red"
-        android:textSize="40dp" />
 </LinearLayout>
