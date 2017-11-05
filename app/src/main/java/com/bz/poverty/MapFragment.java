@@ -132,13 +132,24 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         tvLink1.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
         tvLink2.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
         tvLink3.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+
+        if(item.type==0){
+            tvLink.setText(R.string.map_baseinfo_village);
+            tvLink1.setText(R.string.map_appearance_village);
+        }else if(item.type==1){
+            tvLink.setText(R.string.map_baseinfo_community);
+            tvLink1.setText(R.string.map_appearance_community);
+        }else {
+            tvLink.setText(R.string.map_baseinfo_company);
+            tvLink1.setText(R.string.map_appearance_company);
+        }
         tvTitle.setText(item.name);
         StringBuffer sb = new StringBuffer();
         sb.append("主管单位: ");
-        sb.append(item.intro);
+        sb.append(item.manager);
         sb.append("\n");
         sb.append("\n");
-        sb.append("负责人:");
+        sb.append("党建负责人:");
         sb.append("  ");
         sb.append(item.contact);
         sb.append("  ");
@@ -150,28 +161,37 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
                 mBaiduMap.hideInfoWindow();
             }
         });
+//        tvLink.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final EditText et = new EditText(getContext());
+//                new AlertDialog.Builder(getContext(), R.style.list_dialog_style)
+//                        .setTitle("请输入您想要咨询或预约办理的事项及您的联系方式")
+//                        .setView(et)
+//                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                String input = et.getText().toString();
+//                                MapParam mapParam = new MapParam();
+//                                if (TextUtils.isEmpty(input)) {
+//                                    showToast("请输入您想要咨询或预约办理的事项及您的联系方式");
+//                                    return;
+//                                }
+//                                mapParam.content = input;
+//                                mapParam.villageid = item.id;
+//                                Request.startRequest(mapParam, ServiceMap.consult, mHandler, Request.RequestFeature.BLOCK);
+//                            }
+//                        })
+//                        .setNegativeButton("取消", null)
+//                        .show();
+//            }
+//        });
         tvLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText et = new EditText(getContext());
-                new AlertDialog.Builder(getContext(), R.style.list_dialog_style)
-                        .setTitle("请输入您想要咨询或预约办理的事项及您的联系方式")
-                        .setView(et)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                String input = et.getText().toString();
-                                MapParam mapParam = new MapParam();
-                                if (TextUtils.isEmpty(input)) {
-                                    showToast("请输入您想要咨询或预约办理的事项及您的联系方式");
-                                    return;
-                                }
-                                mapParam.content = input;
-                                mapParam.villageid = item.id;
-                                Request.startRequest(mapParam, ServiceMap.consult, mHandler, Request.RequestFeature.BLOCK);
-                            }
-                        })
-                        .setNegativeButton("取消", null)
-                        .show();
+                Bundle bundle = new Bundle();
+                bundle.putString("title", item.name);
+                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/village/id/" + item.id);
+                qStartActivity(WebActivity.class, bundle);
             }
         });
         tvLink1.setOnClickListener(new View.OnClickListener() {

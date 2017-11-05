@@ -96,11 +96,11 @@ public class DigitFragment extends BaseFragment {
     }
 
     public static class DigitParam extends BaseParam {
-        public int townid = 24;
+        public int townid = 6;//古井
     }
 
     public static class UrlParam extends BaseParam {
-        public int id = 24;
+        public int id = 6;//古井
     }
 
     private class MAdapter extends BaseAdapter {

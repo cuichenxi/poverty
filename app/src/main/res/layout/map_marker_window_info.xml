@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="40dp"
         android:gravity="center_vertical">
 
         <TextView
@@ -16,8 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="李庄"
-            android:textColor="#333"
-            android:textSize="28dp" />
+            android:textColor="#d81e06"
+            android:textSize="20dp" />
 
         <com.framework.view.IFView
             android:id="@+id/tv_close"
@@ -25,14 +25,14 @@
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
             android:text="X"
-            android:textColor="#666"
-            android:textSize="30dp" />
+            android:textColor="#d81e06"
+            android:textSize="25dp" />
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="#999" />
+        android:background="#d81e06" />
 
     <TextView
         android:id="@+id/tv_info"
@@ -43,7 +43,7 @@
         android:padding="10dp"
         android:text="主管单位:您嘎嘎嘎嘎嘎"
         android:textColor="#333"
-        android:textSize="28dp" />
+        android:textSize="14dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -56,29 +56,29 @@
             android:layout_height="wrap_content"
             android:maxWidth="500dp"
             android:padding="10dp"
-            android:text="党员阵地"
+            android:text="村部简介"
             android:textColor="#3E97FA"
-            android:textSize="28dp" />
+            android:textSize="16dp" />
         <TextView
             android:id="@+id/tv_link1"
             android:maxWidth="500dp"
             android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="button1"
+            android:text="村容村貌"
             android:padding="10dp"
             android:textColor="#3E97FA"
-            android:textSize="28dp" />
+            android:textSize="16dp" />
         <TextView
             android:id="@+id/tv_link2"
             android:maxWidth="500dp"
             android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="button2"
+            android:text="活动阵地"
             android:padding="10dp"
             android:textColor="#3E97FA"
-            android:textSize="28dp" />
+            android:textSize="16dp" />
         <TextView
             android:id="@+id/tv_link3"
             android:maxWidth="500dp"
@@ -86,9 +86,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="button3"
+            android:text="党员活动"
             android:textColor="#3E97FA"
-            android:textSize="28dp" />
+            android:textSize="16dp" />
     </LinearLayout>
 
 </LinearLayout>

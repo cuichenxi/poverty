@@ -28,6 +28,8 @@ public class PointResult extends BaseResult {
         public String contact;
         public String mobile;
         public String tel;
+        public String manager;
+        public Integer type;
 
         public void setLatitude(String latitude) {
             this.lon = Double.parseDouble(latitude);

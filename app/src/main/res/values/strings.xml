@@ -54,4 +54,10 @@
     <string name="name_feedback">意见反馈</string>
     <string name="name_about">关于我们</string>    <!-- 时间选择器日期 -->
 
+    <string name="map_baseinfo_village">基本简介</string>
+    <string name="map_baseinfo_community">社区简介</string>
+    <string name="map_baseinfo_company">企业简介</string>
+    <string name="map_appearance_village">村容村貌</string>
+    <string name="map_appearance_community">社区容貌</string>
+    <string name="map_appearance_company">厂区容貌</string>
 </resources>
