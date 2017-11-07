@@ -48,8 +48,8 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
     private MapView mMapView;
     private BaiduMap mBaiduMap;
     private MapStatus mMapStatus;
-    LatLng centerPoint = new LatLng(33.747383, 115.785038);
-    int pZoom = 12;
+    LatLng centerPoint = new LatLng(33.995929, 115.676379);
+    int pZoom = 13;
     int cZoom = 15;
     boolean isChild;
     private List<PointItem> pointItems;
@@ -190,7 +190,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("title", item.name);
-                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/village/id/" + item.id);
+                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/village/type/1/id/" + item.id);
                 qStartActivity(WebActivity.class, bundle);
             }
         });
@@ -199,7 +199,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("title", item.name);
-                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/baseinfo/" + item.id);
+                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/village/type/2/id/" + item.id);
                 qStartActivity(WebActivity.class, bundle);
             }
         });
@@ -209,7 +209,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
                 Bundle bundle = new Bundle();
                 bundle.putString("title", item.name);
 
-                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/baseinfo/" + item.id);
+                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/village/type/3/id/" + item.id);
                 qStartActivity(WebActivity.class, bundle);
             }
         });
@@ -218,7 +218,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("title", item.name);
-                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/baseinfo/" + item.id);
+                bundle.putString("url", "http://dj.qfant.com/index.php/App/Index/village/type/4/id/" + item.id);
                 qStartActivity(WebActivity.class, bundle);
             }
         });
