@@ -40,9 +40,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            android:name=".MainActivity1"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,10 +51,10 @@
         </activity>
         <activity
             android:name=".PlayerActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".WebActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="portrait" />
 
         <service
             android:name="com.baidu.location.f"

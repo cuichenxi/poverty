@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="wheel_line_split_height">30dp</dimen>
-
+    <dimen name="tool_bar_height">100dp</dimen>
     <dimen name="text_h8">8dp</dimen>
     <dimen name="text_h9">9dp</dimen>
     <dimen name="text_h10">10dp</dimen>

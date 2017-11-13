@@ -4,7 +4,10 @@
 
         <item name="android:windowBackground">@color/pub_common_bg</item>
     </style>
-
+    <style name="TextViewStyle" parent="TextView.DefaultStyle">
+        <item name="android:textStyle">italic|bold</item>
+        <item name="android:textColor">@color/pub_color_red</item>
+    </style>
     <style name="MProgressDialog" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>

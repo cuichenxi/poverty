@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
@@ -26,6 +25,7 @@ public class MainTabActivity extends BaseActivity implements TabLayout.OnTabClic
     //    @BindView(R.id.tl_tab)
     TabLayout tabLayout;
     private ViewPager viewPage;
+    public FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,11 +95,11 @@ public class MainTabActivity extends BaseActivity implements TabLayout.OnTabClic
 //            e.printStackTrace();
 //        }
         try {
-            FragmentManager fragmentManager1 = getSupportFragmentManager();
-            if (fragmentManager1.findFragmentByTag(tabItem.text) == null && !tabItem.isAdd) {
+            fragmentManager = getSupportFragmentManager();
+            if (fragmentManager.findFragmentByTag(tabItem.text) == null && !tabItem.isAdd) {
                 tabItem.isAdd = true;
                 BaseFragment fragment = tabItem.tagFragmentClz.newInstance();
-                FragmentTransaction transaction = fragmentManager1.beginTransaction();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
                 fragment.setArguments(tabItem.bundle);
 
                 transaction.add(R.id.fl_content, fragment, tabItem.text);

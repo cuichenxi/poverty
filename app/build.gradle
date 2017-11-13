@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '25.0.3'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.bz.poverty"
@@ -50,6 +50,7 @@ android {
         }
     }
 
+
 }
 
 dependencies {
@@ -62,4 +63,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.alibaba:fastjson:1.2.32'
     compile 'com.jakewharton:butterknife:8.6.0'
+    compile 'com.yalantis:contextmenu:1.0.7'
 }

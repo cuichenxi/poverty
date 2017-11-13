@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="icon_font_empty"></string>//返回
     <string name="icon_font_back">&#xe644;</string>//返回
-    <string name="icon_font_add">&#xe638;</string>//十字添加
-    <string name="icon_font_home">&#xe9bb;</string>//房子home icon
-    <string name="icon_font_my">&#xe601;</string>//我的icon
-    <string name="icon_font_buy_car">&#xe61b;</string>
-    <string name="icon_font_camera">&#xe67f;</string>
-    <string name="icon_font_shopping">&#xe62b;</string>//我的icon
-    <string name="icon_font_menu">&#xe604;</string>//三点菜单
-    <string name="icon_font_money">&#xe670;</string>//口袋钱
-    <string name="icon_font_right_arrows">&#xe612;</string>//右箭头
+    <string name="icon_font_add">&#xe64f;</string>//十字添加
     <string name="icon_font_maker">&#xe63f;</string>
 </resources>
