@@ -1,11 +1,13 @@
 package com.bz.poverty;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.framework.activity.BaseActivity;
 
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.widget.VideoView;
 
 /**
@@ -18,6 +20,7 @@ public class PlayerActivity extends BaseActivity implements View.OnTouchListener
     //        String playUrl = "rtmp://rtmp9.public.topvdn.cn/live/537009139_134283008_1473738972_0654d5f3c24a90a8a183a3d86cdf527c";
 //    String playUrl = "rtmp://7ae2b574.server.topvdn.com:1935/live/537025757_134283008_1508576809_6e52fc80d87a4c386d95cdf5a7954df9";
     String playUrl = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+    private View progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,15 @@ public class PlayerActivity extends BaseActivity implements View.OnTouchListener
         videoView = (VideoView) findViewById(R.id.videoView);
         videoView.setOnTouchListener(this);
         videoView.playVideo(item.rtmp);
+        progressBar =  findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+        videoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(IMediaPlayer iMediaPlayer) {
+                Log.v("PlayerActivity", ":" + iMediaPlayer.getCurrentPosition());
+                progressBar.setVisibility(View.GONE);
+            }
+        });
         //videoView.playLyyRTMPVideo("");
         //videoView.startLyyAudio();
     }
