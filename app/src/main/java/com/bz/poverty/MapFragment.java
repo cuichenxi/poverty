@@ -48,8 +48,8 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
     private MapView mMapView;
     private BaiduMap mBaiduMap;
     private MapStatus mMapStatus;
-//    LatLng centerPoint = new LatLng(33.995929, 115.676379);//古井镇
-    LatLng centerPoint = new LatLng(33.905994, 115.807437);//汤陵社区
+    LatLng centerPoint = new LatLng(33.995929, 115.676379);//古井镇
+//    LatLng centerPoint = new LatLng(33.905994, 115.807437);//汤陵社区
 //    LatLng centerPoint = new LatLng(33.804226, 116.023224);//观堂镇
     int pZoom = 14;
     int cZoom = 15;
