@@ -96,15 +96,19 @@ public class DigitFragment extends BaseFragment {
     }
 
     public static class DigitParam extends BaseParam {
-        public int townid = 6;//古井
+//        public int townid = 6;//古井
 //        public int townid = 14;//观堂镇
 //        public int townid = 24;//汤陵社区
+//        public int townid = 2;//大杨镇
+        public int townid = 12;//牛集镇
     }
 
     public static class UrlParam extends BaseParam {
-        public int id = 6;//古井
+//        public int id = 6;//古井
 //        public int id = 14;//观堂镇
 //        public int id = 24;//汤陵社区
+//        public int id = 2;//大杨镇
+        public int id = 12;//牛集镇
     }
 
     private class MAdapter extends BaseAdapter {
