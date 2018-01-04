@@ -2,6 +2,7 @@ package com.framework.net;
 
 
 import com.bz.poverty.PointResult;
+import com.bz.poverty.QuipmentResult;
 import com.bz.poverty.WeatherResult;
 import com.framework.domain.response.BaseResult;
 import com.framework.utils.Enums;
@@ -18,6 +19,7 @@ public enum ServiceMap implements Enums.IType {
     weather("weather", WeatherResult.class),
     towns("towns", PointResult.class),
     consult("consult", PointResult.class),
+    webequipments("webequipments", QuipmentResult.class),
 //
     ;
 

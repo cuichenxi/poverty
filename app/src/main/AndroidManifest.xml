@@ -41,8 +41,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,6 +52,11 @@
         <activity
             android:name=".WebActivity"
             android:hardwareAccelerated="true" />
+        <activity android:name=".VillageListActivity" />
+        <activity
+            android:name=".PlayerActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" />
 
         <service
             android:name="com.baidu.location.f"

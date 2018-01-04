@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="李庄"
+            android:minWidth="120dp"
             android:textColor="#333"
             android:textSize="14dp" />
 

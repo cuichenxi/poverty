@@ -124,7 +124,10 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
 
     private void addMyLat(LatLng mLatLng) {
 
-        View inflate = LayoutInflater.from(getContext()).inflate(R.layout.map_text_option_me, null);
+        if (getContext() == null) {
+            return;
+        }
+        View inflate = LayoutInflater.from(this.getActivity()).inflate(R.layout.map_text_option_me, null);
         TextView text = (TextView) inflate.findViewById(R.id.text);
         text.setText("");
         text.setVisibility(View.VISIBLE);
@@ -255,7 +258,8 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
         sb.append(item.contact);
         sb.append("  ");
         sb.append(item.tel);
-        tvInfo.setText(sb.toString());
+//        tvInfo.setText(sb.toString());
+        tvInfo.setVisibility(View.GONE);
         tvClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -278,11 +282,12 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
             @Override
             public void onClick(View view) {
 //                final EditText et = new EditText(getContext());
-                String url = "http://dj.qfant.com/index.php/App/Index/equipment/villageid/" + item.id;
+                String url = "http://dj.qfant.com/index.php/App/Index/webequipments/villageid/" + item.id;
                 Bundle bundle = new Bundle();
-                bundle.putString("url", url);
+//                bundle.putString("url", url);
+                bundle.putString("villageId", item.id);
                 bundle.putString("title", "数字化阵地");
-                qStartActivity(WebActivity.class, bundle);
+                qStartActivity(VillageListActivity.class, bundle);
             }
         });
         InfoWindow mInfoWindow = new InfoWindow(layout, marker.getPosition(), BitmapHelper.dip2px(getContext(), -100));
