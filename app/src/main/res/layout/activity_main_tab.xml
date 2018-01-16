@@ -59,6 +59,7 @@
 
     <com.framework.view.tab.TabLayout
         android:id="@+id/tl_tab"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 </LinearLayout>
