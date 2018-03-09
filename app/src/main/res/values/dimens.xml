@@ -25,6 +25,7 @@
     <dimen name="text_h28">28dp</dimen>
     <dimen name="text_h29">29dp</dimen>
     <dimen name="text_h30">30dp</dimen>
+    <dimen name="text_h40">40dp</dimen>
 
     <dimen name="icon_fond_size_h16">16dp</dimen>
     <dimen name="icon_fond_size_h22">22dp</dimen>
