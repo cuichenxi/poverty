@@ -49,7 +49,9 @@ android {
             renderscriptDebuggable false
         }
     }
-
+    lintOptions {
+        disable "ResourceType"
+    }
 }
 
 dependencies {
