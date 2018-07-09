@@ -58,12 +58,13 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
 //    LatLng centerPoint = new LatLng(33.876154, 115.672725);//十八里镇
 //    LatLng centerPoint = new LatLng(33.875315, 115.795716);////薛阁街道
 //    LatLng centerPoint = new LatLng(33.940715, 115.786694);////华佗镇
-    LatLng centerPoint = new LatLng(33.931317,115.937223);////张店乡
+//    LatLng centerPoint = new LatLng(33.931317,115.937223);////张店乡
+    LatLng centerPoint = new LatLng(33.399359,116.381085);////涡阳县西阳镇
     int pZoom = 14;
     int cZoom = 15;
     boolean isChild;
     private List<PointItem> pointItems;
-    public String name = "谯城区";
+    public String name = "涡阳县";
 
     @Nullable
     @Override
