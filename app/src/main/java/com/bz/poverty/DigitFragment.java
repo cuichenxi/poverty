@@ -105,7 +105,8 @@ public class DigitFragment extends BaseFragment {
 //        public int townid = 28;//十八里
 //        public int townid = 25;//薛阁街道
 //        public int townid = 1;//华佗镇
-        public int townid = 21;//张店乡
+//        public int townid = 21;//张店乡
+        public int townid = 30;//西阳镇
     }
 
     public static class UrlParam extends BaseParam {
@@ -118,7 +119,8 @@ public class DigitFragment extends BaseFragment {
 //        public int id = 28;//十八里
 //        public int id = 25;//薛阁街道
 //        public int townid = 1;//华佗镇
-        public int id = 21;//张店乡
+//        public int id = 21;//张店乡
+        public int id = 30;//西阳镇
     }
 
     private class MAdapter extends BaseAdapter {
