@@ -96,7 +96,7 @@ public class DigitFragment extends BaseFragment {
     }
 
     public static class DigitParam extends BaseParam {
-//        public int townid = 6;//古井
+        public int townid = 6;//古井
 //        public int townid = 17;//芦庙镇
 //        public int townid = 14;//观堂镇
 //        public int townid = 24;//汤陵社区
@@ -106,11 +106,11 @@ public class DigitFragment extends BaseFragment {
 //        public int townid = 25;//薛阁街道
 //        public int townid = 1;//华佗镇
 //        public int townid = 21;//张店乡
-        public int townid = 30;//西阳镇
+//        public int townid = 30;//西阳镇
     }
 
     public static class UrlParam extends BaseParam {
-//        public int id = 6;//古井
+        public int id = 6;//古井
 //        public int id = 17;//芦庙镇
 //        public int id = 14;//观堂镇
 //        public int id = 24;//汤陵社区
@@ -120,7 +120,7 @@ public class DigitFragment extends BaseFragment {
 //        public int id = 25;//薛阁街道
 //        public int townid = 1;//华佗镇
 //        public int id = 21;//张店乡
-        public int id = 30;//西阳镇
+//        public int id = 30;//西阳镇
     }
 
     private class MAdapter extends BaseAdapter {

@@ -48,7 +48,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
     private MapView mMapView;
     private BaiduMap mBaiduMap;
     private MapStatus mMapStatus;
-//    LatLng centerPoint = new LatLng(33.995929, 115.676379);//古井镇
+    LatLng centerPoint = new LatLng(33.995929, 115.676379);//古井镇
 //    LatLng centerPoint = new LatLng(34.009637, 115.78515);//芦庙镇
 //    LatLng centerPoint = new LatLng(33.853446, 115.754576);//经开区
 //    LatLng centerPoint = new LatLng(33.687446, 115.913639);//经开区
@@ -59,7 +59,7 @@ public class MapFragment extends BaseFragment implements BaiduMap.OnMarkerClickL
 //    LatLng centerPoint = new LatLng(33.875315, 115.795716);////薛阁街道
 //    LatLng centerPoint = new LatLng(33.940715, 115.786694);////华佗镇
 //    LatLng centerPoint = new LatLng(33.931317,115.937223);////张店乡
-    LatLng centerPoint = new LatLng(33.399359,116.381085);////涡阳县西阳镇
+//    LatLng centerPoint = new LatLng(33.399359,116.381085);////涡阳县西阳镇
     int pZoom = 14;
     int cZoom = 15;
     boolean isChild;
