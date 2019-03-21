@@ -199,11 +199,21 @@ public class MainActivity extends MainTabActivity {
 //        addTab("微信党支部", WebFragment.class, getBundle("微信党支部","http://dj.qfant.com/index.php/App/Index/dangyuan"), R.drawable.iocn_signin);
 //        addTab("个人中心", WebFragment.class, getBundle("个人中心","http://dj.qfant.com/index.php/App/User/userinfo"), R.drawable.icon_usercenter);
         //薛阁街道谯陵社区
+//        addTab("基本情况", WebFragment.class, getBundle("基本情况","http://dj.qfant.com/index.php/App/Index/baseinfo/id/25"), R.drawable.icon_online);
+//        addTab("标准化建设", WebFragment.class, getBundle("标准化建设","http://dj.qfant.com/index.php/App/Index/news/catid/2263"), R.drawable.icon_feature);
+//        addTab("工作动态", WebFragment.class, getBundle("工作动态","http://dj.qfant.com/index.php/App/Index/news/catid/2262"), R.drawable.icon_digitize);
+//        addTab("组织生活", WebFragment.class, getBundle("组织生活","http://dj.qfant.com/index.php/App/Index/grouplife/catid/77"), R.drawable.icon_twolearn);
+//        addTab("党员信息", WebFragment.class, getBundle("党员信息","http://dj.qfant.com/index.php/App/Index/openinfo/id/136"), R.drawable.icon_userinfo);
+//        addTab("数字化阵地", DigitFragment.class, getBundle("数字化阵地","http://dj.qfant.com/index.php/App/Index/cameras/id/25"), R.drawable.iocn_base);
+//        addTab("组织关系转接", WebFragment.class, getBundle("组织关系转接","http://dj.qfant.com/index.php/App/Index/groupindex"), R.drawable.icon_connection);
+//        addTab("微信党支部", WebFragment.class, getBundle("微信党支部","http://dj.qfant.com/index.php/App/Index/dangyuan"), R.drawable.iocn_signin);
+//        addTab("个人中心", WebFragment.class, getBundle("个人中心","http://dj.qfant.com/index.php/App/User/userinfo"), R.drawable.icon_usercenter);
+        //薛阁街道薛阁社区
         addTab("基本情况", WebFragment.class, getBundle("基本情况","http://dj.qfant.com/index.php/App/Index/baseinfo/id/25"), R.drawable.icon_online);
-        addTab("标准化建设", WebFragment.class, getBundle("标准化建设","http://dj.qfant.com/index.php/App/Index/news/catid/2263"), R.drawable.icon_feature);
-        addTab("工作动态", WebFragment.class, getBundle("工作动态","http://dj.qfant.com/index.php/App/Index/news/catid/2262"), R.drawable.icon_digitize);
+        addTab("标准化建设", WebFragment.class, getBundle("标准化建设","http://dj.qfant.com/index.php/App/Index/news/catid/2412"), R.drawable.icon_feature);
+        addTab("工作动态", WebFragment.class, getBundle("工作动态","http://dj.qfant.com/index.php/App/Index/news/catid/2413"), R.drawable.icon_digitize);
         addTab("组织生活", WebFragment.class, getBundle("组织生活","http://dj.qfant.com/index.php/App/Index/grouplife/catid/77"), R.drawable.icon_twolearn);
-        addTab("党员信息", WebFragment.class, getBundle("党员信息","http://dj.qfant.com/index.php/App/Index/openinfo/id/136"), R.drawable.icon_userinfo);
+        addTab("党员信息", WebFragment.class, getBundle("党员信息","http://dj.qfant.com/index.php/App/Index/openinfo/id/132"), R.drawable.icon_userinfo);
         addTab("数字化阵地", DigitFragment.class, getBundle("数字化阵地","http://dj.qfant.com/index.php/App/Index/cameras/id/25"), R.drawable.iocn_base);
         addTab("组织关系转接", WebFragment.class, getBundle("组织关系转接","http://dj.qfant.com/index.php/App/Index/groupindex"), R.drawable.icon_connection);
         addTab("微信党支部", WebFragment.class, getBundle("微信党支部","http://dj.qfant.com/index.php/App/Index/dangyuan"), R.drawable.iocn_signin);
